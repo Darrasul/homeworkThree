@@ -29,9 +29,14 @@ public class ProductRepository {
         }
 
         public void addProduct(String name){
-            long lastNumber = products.get(products.size() - 1).getId();
-            Product product = new Product(lastNumber + 1, name);
-            products.add(product);
+            if (products.size() != 0){
+                long lastNumber = products.get(products.size() - 1).getId();
+                Product product = new Product(lastNumber + 1, name);
+                products.add(product);
+            } else {
+                Product product = new Product(0L, name);
+                products.add(product);
+            }
         }
 
         public void addStylizedProduct(){

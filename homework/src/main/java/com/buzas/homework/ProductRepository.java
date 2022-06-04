@@ -35,9 +35,14 @@ public class ProductRepository {
         }
 
         public void addStylizedProduct(){
-            long lastNumber = products.get(products.size() - 1).getId();
-            Product product = new Product(lastNumber + 1, "Product № " + ((int)lastNumber + 2));
-            products.add(product);
+            if (products.size() != 0){
+                long lastNumber = products.get(products.size() - 1).getId();
+                Product product = new Product(lastNumber + 1, "Product № " + ((int)lastNumber + 2));
+                products.add(product);
+            } else {
+                Product product = new Product(0L, "Product № " + 1);
+                products.add(product);
+            }
         }
 
         public void removeProduct(Long id){

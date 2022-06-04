@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ProductRepository {
@@ -51,12 +52,7 @@ public class ProductRepository {
             return Collections.unmodifiableList(products);
         }
 
-        public Product getProduct(Long id) {
-            for (Product product : products) {
-                if (product.getId().equals(id)){
-                    return product;
-                }
-            }
-            return new Product("unknown");
+        public Optional<Product> getProduct(Long id) {
+            return products.stream().filter(p -> p.getId().equals(id)).findFirst();
         }
 }

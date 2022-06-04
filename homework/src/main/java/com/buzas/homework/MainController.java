@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -32,7 +33,7 @@ public class MainController {
 
     @GetMapping("/api/v1/products/{id}")
     @ResponseBody
-    public Product showProduct(@PathVariable Long id) {
+    public Optional<Product> showProduct(@PathVariable Long id) {
         return repo.getProduct(id);
     }
 

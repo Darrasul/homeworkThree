@@ -61,8 +61,4 @@ public class ProductRepository {
         public List<Product> getAllProducts() {
             return Collections.unmodifiableList(products);
         }
-
-        public Optional<Product> getProduct(Long id) {
-            return products.stream().filter(p -> p.getId().equals(id)).findFirst();
-        }
 }

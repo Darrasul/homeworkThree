@@ -1,14 +1,11 @@
 package com.buzas.homework;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@Controller
+@RestController
 public class MainController {
 
     ProductRepository repo;
@@ -19,45 +16,38 @@ public class MainController {
     }
 
     @GetMapping
-//    @ResponseBody
     public String showMainPage() {
         return "RestController";
     }
 
     @GetMapping("/api/v1/products")
-    public String showAllProducts(Model model) {
-
-        model.addAttribute("products", repo.getAllProducts());
-        return "ProductsTab";
+    public List<Product> showAllProducts() {
+        return repo.getAllProducts();
     }
 
     @GetMapping("/api/v1/products/{id}")
     @ResponseBody
-    public Optional<Product> showProduct(@PathVariable Long id) {
-        return repo.getProduct(id);
+    public Product showProduct(@PathVariable Long id) {
+        return repo.getAllProducts().stream().filter(p -> p.getId().equals(id)).findFirst().orElseThrow(() -> new RuntimeException("Product with this id is not exists"));
     }
 
 //    http://localhost:8080/RestController/api/v1/products?name=test
     @PostMapping("/api/v1/products")
-    @ResponseBody
     public void createProduct(@RequestParam(defaultValue = "unknown product") String name) {
         repo.addProduct(name);
     }
 
     @PostMapping("/api/v1/products/stylized")
-    @ResponseBody
     public void createStylizedProduct() {
         repo.addStylizedProduct();
     }
 
     @DeleteMapping("/api/v1/products")
-    @ResponseBody
     public void deleteAllProducts() {
          repo.removeAllProduct();
     }
 
     @DeleteMapping("/api/v1/products/{id}")
-    @ResponseBody
     public void deleteProduct(@PathVariable Long id) {
         repo.removeProduct(id);
     }

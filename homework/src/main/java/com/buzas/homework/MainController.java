@@ -2,6 +2,7 @@ package com.buzas.homework;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -15,9 +16,10 @@ public class MainController {
         this.repo = repo;
     }
 
+//    http://localhost:8080/RestController/
     @GetMapping
-    public String showMainPage() {
-        return "RestController";
+    public ModelAndView showMainPage() {
+        return new ModelAndView("MainPage");
     }
 
     @GetMapping("/api/v1/products")
